@@ -14,7 +14,7 @@ from telegram.error import TimedOut, NetworkError
 # Bot Token - Set here or use environment variable TELEGRAM_BOT_TOKEN
 # For Railway/Cloud: Use environment variable
 # For local: Set BOT_TOKEN here or use environment variable
-BOT_TOKEN = ""  # Leave empty to use environment variable only
+BOT_TOKEN = "8045884584:AAHydJxx9WvQ_M-jeflzuBCNmIbyBx9YnlY"  # Leave empty to use environment variable only
 
 # ============================================================================
 
@@ -972,3 +972,4 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+
