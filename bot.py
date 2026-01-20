@@ -7,6 +7,17 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 from telegram.constants import ParseMode
 from telegram.error import TimedOut, NetworkError
 
+# ============================================================================
+# CONFIGURATION
+# ============================================================================
+
+# Bot Token - Set here or use environment variable TELEGRAM_BOT_TOKEN
+# For Railway/Cloud: Use environment variable
+# For local: Set BOT_TOKEN here or use environment variable
+BOT_TOKEN = ""  # Leave empty to use environment variable only
+
+# ============================================================================
+
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -892,12 +903,25 @@ async def send_csv_file(message, context: ContextTypes.DEFAULT_TYPE, csv_file_pa
 
 def main() -> None:
     """Start the bot"""
+    # Try to get token from environment variable first (for Railway/cloud deployments)
     token = os.getenv('TELEGRAM_BOT_TOKEN')
     
+    # If not in environment, try the BOT_TOKEN variable in file
     if not token:
-        logger.error("TELEGRAM_BOT_TOKEN environment variable not set!")
-        print("\n❌ Error: TELEGRAM_BOT_TOKEN environment variable not set!")
-        print("Please set it using: $env:TELEGRAM_BOT_TOKEN='your_token_here'")
+        token = BOT_TOKEN
+    
+    # If still no token, show error
+    if not token:
+        logger.error("Bot token not found!")
+        print("\n❌ Error: Bot token not found!")
+        print("\nPlease set the token in one of these ways:")
+        print("1. Environment variable (for Railway/cloud):")
+        print("   export TELEGRAM_BOT_TOKEN='your_token_here'")
+        print("   Or in Railway: Add TELEGRAM_BOT_TOKEN in Variables")
+        print("\n2. In the file itself (for local use):")
+        print("   Edit bot.py and set BOT_TOKEN = 'your_token_here'")
+        print("\n3. Windows PowerShell:")
+        print("   $env:TELEGRAM_BOT_TOKEN='your_token_here'")
         return
     
     # Create application
